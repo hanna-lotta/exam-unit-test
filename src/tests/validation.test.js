@@ -13,7 +13,34 @@ const exampleCartObject = {
 }
 
 // Group tests using "describe"
-describe('Validation', () => {
+describe('Validation isCartItem', () => {
+	it ('returns true for a valid cart object', () => {
+		// Arrange
+
+		const exampleCartObject = {
+			id: 2001,
+			amount: 1,
+			item: exampleProduct
+		}
+		// Act
+		const result = isCartItem(exampleCartObject)
+		// Assert
+		expect(result).toBe(true)
+	}
+	)
+	it ('returns false for invalid cart objects', () => {
+		// Arrange
+		const exampleCartObject = {
+			id: 2001,
+			amount: 'hej', 
+			item: exampleProduct
+		}
+		// Act
+		const result = isCartItem(exampleCartObject)
+		// Assert
+		expect(result).toBe(false)
+	}
+	)
 
 	// Använd en "test" eller "it" (de är synonymer) för varje testfall
 	/* Exempel på syntax:
