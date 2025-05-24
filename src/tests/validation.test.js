@@ -25,7 +25,7 @@ describe('Validation isCartItem', () => {
 		// Act
 		const actual = isCartItem(exampleCartObject)
 		// Assert
-		expect(actual).toBe(true)
+		expect(actual).toBe(expected)
 	}
 	)
 	it ('returns false for invalid cart objects', () => {
@@ -39,7 +39,7 @@ describe('Validation isCartItem', () => {
 		// Act
 		const actual = isCartItem(exampleCartObject)
 		// Assert
-		expect(actual).toBe(false)
+		expect(actual).toBe(expected)
 	}
 	)
 })
@@ -56,7 +56,7 @@ describe('Validation isCartItem', () => {
 			//Act
 			const actual = isProduct(exampleProduct)
 			// Assert
-			expect(actual).toBe(true)
+			expect(actual).toBe(expected)
 		}
 		)
 		it ( 'returns false for invalid cart objects', () => {
@@ -70,18 +70,12 @@ describe('Validation isCartItem', () => {
 			//Act
 			const actual = isProduct(exampleProduct)
 			// Assert
-			expect(actual).toBe(false)
+			expect(actual).toBe(expected)
 		}
 		)
-	}
-
-	// Använd en "test" eller "it" (de är synonymer) för varje testfall
-	/* Exempel på syntax:
-	test('beskriv testfallet', () => {
-		// här skriver du testkoden
-		// avsluta alltid med "expect"
 	})
-	*/
+
+	
 
 
 	// ---------------------------------------------
@@ -93,4 +87,4 @@ describe('Validation isCartItem', () => {
 
 	// 3. it returns true for a valid product
 	// 4. it returns false for invalid cart objects
-})
+

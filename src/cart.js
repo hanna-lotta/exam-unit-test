@@ -17,8 +17,8 @@ Tips:
 // function clearCart()
 // -------------------------------------------------- //
 
-//import { isCartItem, isProduct } from "./validation.js"
-/*
+import { isCartItem, isProduct } from "./validation.js"
+
 let cart = []
 let idCounter = 2002
 // -------------------------------------------------- //
@@ -39,8 +39,8 @@ function addToCart(newItem) {
 	const cartItem = { id: idCounter, amount: 1, item: newItem }
 	idCounter++
 	cart.push(cartItem)
-}*/
+}
 
 
 
-//export { getCartItemCount, addToCart }
+export { getCartItemCount, addToCart }
