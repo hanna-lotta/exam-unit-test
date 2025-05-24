@@ -1,5 +1,5 @@
 // importera här
-import { addToCart, getCartItemCount } from "../cart"
+import { addToCart, getCartItemCount, clearCart } from "../cart"
 
 
 describe('Cart', () => {
@@ -13,6 +13,7 @@ describe('Cart', () => {
 	// Skriv dina testfall här
 
 	// Du får ett test att börja med
+	describe('addToCArt', () => {
 	test('addToCart lägger till en ny produkt i kundvagnen', () => {
 		const itemCountBefore = getCartItemCount()
 		const input = { id: 1002, name: 'Vattenpistol', price: 40 }
@@ -24,7 +25,7 @@ describe('Cart', () => {
 
 		expect(itemCountAfter).toBe(itemCountBefore + 1)
 	})
-
+	})
 
 	// -------------------------------------------------- //
 })

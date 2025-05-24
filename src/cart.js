@@ -23,12 +23,16 @@ let cart = []
 let idCounter = 2002
 // -------------------------------------------------- //
 
-
 // Din kod börjar här
 // Du får en funktion att börja med
 
+
+function clearCart() {
+	cart = []
+}
+
 function getCartItemCount() {
-	throw new Error('TODO')
+	return cart.length
 }
 
 function addToCart(newItem) {
@@ -43,4 +47,4 @@ function addToCart(newItem) {
 
 
 
-export { getCartItemCount, addToCart }
+export { getCartItemCount, addToCart, clearCart }
