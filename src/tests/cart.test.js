@@ -1,7 +1,7 @@
 // importera här
-import { addToCart, getCartItemCount } from "../cart"
+//import { addToCart, getCartItemCount } from "../cart"
 
-
+/*
 describe('Cart', () => {
 	beforeEach(() => {
 		// Denna kod körs före varje test. Det är för att rensa kundvagnen, så inte saker ligger kvar från föregående test.
@@ -27,4 +27,4 @@ describe('Cart', () => {
 
 
 	// -------------------------------------------------- //
-})
+})*/

@@ -16,16 +16,16 @@ const exampleCartObject = {
 describe('Validation isCartItem', () => {
 	it ('returns true for a valid cart object', () => {
 		// Arrange
-
 		const exampleCartObject = {
 			id: 2001,
 			amount: 1,
 			item: exampleProduct
 		}
+		const expected = true
 		// Act
-		const result = isCartItem(exampleCartObject)
+		const actual = isCartItem(exampleCartObject)
 		// Assert
-		expect(result).toBe(true)
+		expect(actual).toBe(true)
 	}
 	)
 	it ('returns false for invalid cart objects', () => {
@@ -35,12 +35,45 @@ describe('Validation isCartItem', () => {
 			amount: 'hej', 
 			item: exampleProduct
 		}
+		const expected = false
 		// Act
-		const result = isCartItem(exampleCartObject)
+		const actual = isCartItem(exampleCartObject)
 		// Assert
-		expect(result).toBe(false)
+		expect(actual).toBe(false)
 	}
 	)
+})
+
+	describe( 'Validation isProduct', () => {
+		it ( 'returns true for a valid product', () => {
+			//Arrange
+			const exampleProduct = {
+				id: 1001,
+				name: 'Badanka',
+				price: 500
+			}
+			const expected = true
+			//Act
+			const actual = isProduct(exampleProduct)
+			// Assert
+			expect(actual).toBe(true)
+		}
+		)
+		it ( 'returns false for invalid cart objects', () => {
+			//Arrange
+			const exampleProduct = {
+				id: 1001,
+				name: 'Badanka',
+				price: 'femtio'
+			}
+			const expected = false
+			//Act
+			const actual = isProduct(exampleProduct)
+			// Assert
+			expect(actual).toBe(false)
+		}
+		)
+	}
 
 	// Använd en "test" eller "it" (de är synonymer) för varje testfall
 	/* Exempel på syntax:
