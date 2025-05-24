@@ -14,7 +14,14 @@ function isCartItem(maybeCartItem) {
 	return true
 }
 
-function isProduct(maybeProduct) {}
+function isProduct(maybeProduct) {
+	if ( typeof maybeProduct.id !== 'number' ||
+		 typeof maybeProduct.name !== 'string' ||
+		 typeof maybeProduct.price !== 'number') {
+			return false
+	}
+	return true
+}
 
 
 export { isCartItem, isProduct }
