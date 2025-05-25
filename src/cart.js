@@ -25,6 +25,30 @@ let idCounter = 2002
 
 // Din kod börjar här
 // Du får en funktion att börja med
+function getCartValue() {}
+
+function removeFromCart(itemId) {}
+
+/* 
+AK
+A1. removeFromCart ska ta bort en produkt från kundvagnen, då returneras true
+A2. ska returnera felmeddelande "Varan hittades inte" om itemId inte finns i kundvagnen
+*/
+
+function editCart(itemId, newValues) {}
+
+/*
+AK
+A1. editCart ska uppdatera de värden som skickas in i newValues
+A2. editcart ska inte uppdatera värden som inte finns i newValues
+A3. Om itemId inte finns i kundvagnen ska editCart returnera false
+A4. Om itemId finns i kundvagnen ska editCart returnera true
+A5. Om newValues är tomt ska editCart returnera false
+A6. Om newValues inte är ett objekt ska editCart returnera false
+A7. Om newValues innehåller en amount som inte är ett heltal ska editCart returnera false
+// A8. Om newValues innehåller en amount som är mindre än 1 ska editCart returnera false
+
+*/
 
 
 function clearCart() {

@@ -16,14 +16,10 @@ const exampleCartObject = {
 describe('Validation isCartItem', () => {
 	it ('returns true for a valid cart object', () => {
 		// Arrange
-		const exampleCartObject = {
-			id: 2001,
-			amount: 1,
-			item: exampleProduct
-		}
+		const input = exampleCartObject
 		const expected = true
 		// Act
-		const actual = isCartItem(exampleCartObject)
+		const actual = isCartItem(input)
 		// Assert
 		expect(actual).toBe(expected)
 	}
@@ -47,14 +43,10 @@ describe('Validation isCartItem', () => {
 	describe( 'Validation isProduct', () => {
 		it ( 'returns true for a valid product', () => {
 			//Arrange
-			const exampleProduct = {
-				id: 1001,
-				name: 'Badanka',
-				price: 500
-			}
+			const input = exampleProduct
 			const expected = true
 			//Act
-			const actual = isProduct(exampleProduct)
+			const actual = isProduct(input)
 			// Assert
 			expect(actual).toBe(expected)
 		}
