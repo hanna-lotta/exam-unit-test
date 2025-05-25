@@ -27,12 +27,25 @@ let idCounter = 2002
 // Du får en funktion att börja med
 function getCartValue() {}
 
-function removeFromCart(itemId) {}
+
+// TODO: gör en throw error för felmeddelanden
+function removeFromCart(itemId) {
+	if ( typeof itemId !== 'number') {
+		throw new Error ('Varan hittades inte')
+	}
+	const originalLength = cart.length
+    cart = cart.filter(item => item.id !== itemId)
+    if (cart.length === originalLength) {
+        throw new Error ('Varan hittades inte') 
+    }
+    return true
+}
 
 /* 
 AK
 A1. removeFromCart ska ta bort en produkt från kundvagnen, då returneras true
 A2. ska returnera felmeddelande "Varan hittades inte" om itemId inte finns i kundvagnen
+A3. ska returnera false om itemId inte är ett nummer
 */
 
 function editCart(itemId, newValues) {}
@@ -71,4 +84,4 @@ function addToCart(newItem) {
 
 
 
-export { getCartItemCount, addToCart, clearCart }
+export { getCartItemCount, addToCart, clearCart, removeFromCart, editCart, getCartValue, cart, idCounter }
