@@ -1,5 +1,5 @@
 // importera här
-import { addToCart, getCartItemCount, clearCart, removeFromCart, cart, getItem, idCounter } from "../cart"
+import { addToCart, getCartItemCount, clearCart, removeFromCart, cart, getItem, getTotalCartValue, idCounter } from "../cart"
 
 
 describe('Cart', () => {
@@ -55,8 +55,34 @@ describe('Cart', () => {
 			//expect(getItem(0)).toBe(false)
 		})
 	})
+	
+	describe('getTotalCartValue', () => {
+		test('getTotalCartValue ska returnera 0 om kundvagnen är tom', () => {
+			const expected = 0
+			const actual = getTotalCartValue()
+			expect(actual).toBe(expected)
+		})
+		
+		test('getTotalCartValue ska returnera summan av alla produkter i kundvagnen', () => {
+			const input1 = { id: 1001, name: 'Snorkel', price: 55 }
+			const input2 = { id: 1002, name: 'Vattenpistol', price: 40 }
+			addToCart(input1)
+			addToCart(input2)
+			addToCart(input2) // testar amount
 
+			const expected = input1.price + (input2.price * 2)
 
+			const actual = getTotalCartValue()
+
+			expect(actual).toBe(expected)
+		})
+
+		test('getTotalCartValue kastar fel om ett objekt i kundvagnen inte är ett giltigt cartItem', () => {
+    		cart.push({ id: 'leksak', name: 'Snorkel', price: 55 }) 
+    		
+			expect(() => getTotalCartValue()).toThrow('Ogiltigt objekt i kundvagnen')
+		})
+	})
 
 
 	/*
