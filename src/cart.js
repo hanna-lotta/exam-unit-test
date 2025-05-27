@@ -26,14 +26,14 @@ let idCounter = 2002
 // Din kod börjar här
 // Du får en funktion att börja med
 function getItem(index) {
-  /*  if (typeof index !== 'number') {
+    if (typeof index !== 'number') {
         return false
     } else if (index < 0 || index >= cart.length) {
         return false
     } else if (!isCartItem(cart[index])) {
         return false
     }
-    return cart[index]*/
+    return cart[index]
 }
 
 /* AK 

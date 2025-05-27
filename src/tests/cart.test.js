@@ -1,5 +1,5 @@
 // importera här
-import { addToCart, getCartItemCount, clearCart, removeFromCart, cart, idCounter } from "../cart"
+import { addToCart, getCartItemCount, clearCart, removeFromCart, cart, getItem, idCounter } from "../cart"
 
 
 describe('Cart', () => {
@@ -18,8 +18,8 @@ describe('Cart', () => {
 			addToCart(input)
 			
 			const actual = getItem(0) 
-			expect(actual).toEqual(input)
-		})
+			expect(actual.item).toEqual(input)
+		})  /* Felet beror på att din addToCart-funktion lägger till ett nytt objekt i kundvagnen med en annan struktur än det du skickar in som input. Du ska jämföra med actual.item istället för hela objektet*/
 		
 		test('getItem ska returnera false om index är mindre än 0 eller större än antalet objekt i kundvagnen', () => {
 			/*
