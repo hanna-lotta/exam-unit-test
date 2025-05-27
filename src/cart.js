@@ -41,13 +41,10 @@ A1. getItem ska returnera ett objekt som finns i kundvagnen
 A2. getItem ska returnera false om index är mindre än 0 eller större än antalet objekt i kundvagnen
 A3. getItem ska returnera false om index inte är ett nummer
 A4. getItem ska returnera false om objektet inte är ett giltigt cartItem
-
-
-
 */
 
 function getTotalCartValue() {
-	/*if (cart.length === 0) {
+	if (cart.length === 0) {
 		return 0
 	}
 	return cart.reduce((total, item) => {
@@ -55,7 +52,7 @@ function getTotalCartValue() {
 			throw new Error('Ogiltigt objekt i kundvagnen')
 		}
 		return total + (item.item.price * item.amount)
-	}, 0)*/
+	}, 0)
 }
 /* AK 
 A1. getTotalCartValue ska returnera 0 om kundvagnen är tom
