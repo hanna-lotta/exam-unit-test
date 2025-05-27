@@ -8,6 +8,57 @@ describe('Cart', () => {
 		clearCart()
 	})
 	
+	/*toBe jämför om det är exakt samma objekt i minnet (referensjämförelse).
+	toEqual jämför om objekten har samma innehåll (värdejämförelse).
+	När du använder addToCart(input) skapas ett nytt objekt i kundvagnen, så även om innehållet är samma är det inte samma objekt i minnet. Därför kommer toBe(input) oftast att misslyckas, medan toEqual(input) fungerar som du vill. */
+
+	describe('getItem', () => {
+		test('getItem ska returnera ett objekt som finns i kundvagnen', () => {
+			const input = { id: 1001, name: 'Snorkel', price: 55 }
+			addToCart(input)
+			
+			const actual = getItem(0) 
+			expect(actual).toEqual(input)
+		})
+		
+		test('getItem ska returnera false om index är mindre än 0 eller större än antalet objekt i kundvagnen', () => {
+			/*
+			const expected = false
+			const actual = getItem(-1) 
+			expect(actual).toBe(expected)
+
+			const expected2 = false
+			const actual2 = getItem(1) // finns bara ett objekt i kundvagnen
+			expect(actual2).toBe(expected2)
+			*/
+
+			expect(getItem(-1)).toBe(false)
+			expect(getItem(1)).toBe(false) // finns bara ett objekt i kundvagnen
+		})
+		
+		test('getItem ska returnera false om index inte är ett nummer', () => {
+			const input = 'hej'
+			const expected = false
+			const actual = getItem(input)
+			expect(actual).toBe(expected)
+			// eller
+			//expect(getItem('hej')).toBe(false)
+		})
+		
+		test('getItem ska returnera false om objektet inte är ett giltigt cartItem', () => {
+			const input = { id: 1001, name: 'Snorkel', price: 'femtio' } 
+			addToCart(input)
+			const expected = false
+			const actual = getItem(0)
+			expect(actual).toBe(expected)
+			
+			//expect(getItem(0)).toBe(false)
+		})
+	})
+
+
+
+
 	/*
 	addToCart-funktion returnerar inget värde alls (den har ingen return-sats), utan den lägger bara till ett nytt objekt i kundvagnen (cart). Det objektet som läggs till i kundvagnen får dessutom ett nytt id (från idCounter), inte det id du skickar in i input.
 	*/

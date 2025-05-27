@@ -25,10 +25,33 @@ let idCounter = 2002
 
 // Din kod börjar här
 // Du får en funktion att börja med
+function getItem(index) {
+  /*  if (typeof index !== 'number') {
+        return false
+    } else if (index < 0 || index >= cart.length) {
+        return false
+    } else if (!isCartItem(cart[index])) {
+        return false
+    }
+    return cart[index]*/
+}
+
+/* AK 
+A1. getItem ska returnera ett objekt som finns i kundvagnen
+A2. getItem ska returnera false om index är mindre än 0 eller större än antalet objekt i kundvagnen
+A3. getItem ska returnera false om index inte är ett nummer
+A4. getItem ska returnera false om objektet inte är ett giltigt cartItem
+
+
+
+*/
+
+
+
 function getCartValue() {}
 
 
-// TODO: gör en throw error för felmeddelanden
+
 function removeFromCart(itemId) {
 	if ( typeof itemId !== 'number') {
 		throw new Error ('Varan hittades inte')
@@ -43,9 +66,9 @@ function removeFromCart(itemId) {
 
 /* 
 AK
-A1. removeFromCart ska ta bort en produkt från kundvagnen, då returneras true
-A2. ska returnera felmeddelande "Varan hittades inte" om itemId inte finns i kundvagnen
-A3. ska returnera false om itemId inte är ett nummer
+A1. removeFromCart ska ta bort en produkt från kundvagnen
+A2. ska kasta felmeddelande "Varan hittades inte" om itemId inte finns i kundvagnen
+A3. ska  kasta 'Varan hittades inte' om itemId inte är ett nummer
 */
 
 function editCart(itemId, newValues) {}
@@ -84,4 +107,4 @@ function addToCart(newItem) {
 
 
 
-export { getCartItemCount, addToCart, clearCart, removeFromCart, editCart, getCartValue, cart, idCounter }
+export { getCartItemCount, addToCart, clearCart, removeFromCart, editCart, getCartValue, getItem, cart, idCounter }
