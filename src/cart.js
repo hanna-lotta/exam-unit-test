@@ -46,9 +46,24 @@ A4. getItem ska returnera false om objektet inte är ett giltigt cartItem
 
 */
 
+function getTotalCartValue() {
+	/*if (cart.length === 0) {
+		return 0
+	}
+	return cart.reduce((total, item) => {
+		if (!isCartItem(item)) {
+			throw new Error('Ogiltigt objekt i kundvagnen')
+		}
+		return total + (item.item.price * item.amount)
+	}, 0)*/
+}
+/* AK 
+A1. getTotalCartValue ska returnera 0 om kundvagnen är tom
+A2. getTotalCartValue ska returnera summan av alla produkter i kundvagnen
+A3. getTotalCartValue ska kasta ett felmeddelande om ett eller flera objekt i kundvagnen inte är giltiga cartItems
 
+*/
 
-function getCartValue() {}
 
 
 
@@ -107,4 +122,4 @@ function addToCart(newItem) {
 
 
 
-export { getCartItemCount, addToCart, clearCart, removeFromCart, editCart, getCartValue, getItem, cart, idCounter }
+export { getCartItemCount, addToCart, clearCart, removeFromCart, editCart, getTotalCartValue, getItem, cart, idCounter }
