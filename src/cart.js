@@ -63,7 +63,23 @@ A3. getTotalCartValue ska kasta ett felmeddelande om ett eller flera objekt i ku
 
 
 
+/* Kollar om itemId är ett nummer
+Om inte, kastas ett fel.
 
+Sparar längden på kundvagnen före borttagning
+const originalLength = cart.length
+
+Tar bort item ur kundvagnen
+cart = cart.filter(item => item.id !== itemId)
+Denna rad skapar en ny array där alla objekt med item.id !== itemId finns kvar.
+Det är här själva borttagningen sker!
+Om ett objekt hade det id:t, tas det bort.
+
+Kollar om något togs bort
+Om längden på kundvagnen är oförändrad (cart.length === originalLength), betyder det att inget objekt hade det id:t – då kastas ett fel.
+
+Returnerar true
+Om ett objekt togs bort, returneras true för att signalera att borttagningen lyckades. */
 function removeFromCart(itemId) {
 	if ( typeof itemId !== 'number') {
 		throw new Error ('Varan hittades inte')
@@ -72,6 +88,8 @@ function removeFromCart(itemId) {
     cart = cart.filter(item => item.id !== itemId)
     if (cart.length === originalLength) {
         throw new Error ('Varan hittades inte') 
+		/* Om någon försöker ta bort en produkt som inte finns, är det ofta ett tecken på att något gått fel i flödet.
+		Det gör det tydligt för den som använder funktionen att detta är ett allvarligt fel som måste hanteras. */
     }
     return true
 }
@@ -83,18 +101,39 @@ A2. ska kasta felmeddelande "Varan hittades inte" om itemId inte finns i kundvag
 A3. ska  kasta 'Varan hittades inte' om itemId inte är ett nummer
 */
 
-function editCart(itemId, newValues) {}
+/*  Object.keys(obj) är en inbyggd JavaScript-metod som returnerar en array med alla egenskapsnamn (keys) i objektet obj. */
+/* Object.assign() är en inbyggd JavaScript-metod som kopierar egenskaper från ett eller flera objekt till ett målobjekt.*/
+function editCart(itemId, newValues) {
+	/*
+	 if (!newValues || typeof newValues !== "object" || Object.keys(newValues).length === 0) {
+        return false
+    }
+    if (typeof newValues.price !== 'number' || typeof newValues.amount !== 'number') {
+        return false
+    }
+    if (newValues.amount < 1) {
+        return false
+    }
+	
+	*/
+
+	/* const cartItem = cart.find(item => item.id === itemId)
+    if (cartItem) {
+        Object.assign(cartItem, newValues)
+        return true
+    }
+    return false */
+}
 
 /*
 AK
 A1. editCart ska uppdatera de värden som skickas in i newValues
 A2. editcart ska inte uppdatera värden som inte finns i newValues
 A3. Om itemId inte finns i kundvagnen ska editCart returnera false
-A4. Om itemId finns i kundvagnen ska editCart returnera true
-A5. Om newValues är tomt ska editCart returnera false
-A6. Om newValues inte är ett objekt ska editCart returnera false
-A7. Om newValues innehåller en amount som inte är ett heltal ska editCart returnera false
-// A8. Om newValues innehåller en amount som är mindre än 1 ska editCart returnera false
+A4. Om newValues är tomt ska editCart returnera false
+A5. Om newValues inte är ett objekt ska editCart returnera false
+A6. Om newValues innehåller en amount som inte är ett heltal ska editCart returnera false
+A7. Om newValues innehåller en amount som är mindre än 1 ska editCart returnera false
 
 */
 

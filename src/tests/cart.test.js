@@ -8,6 +8,90 @@ describe('Cart', () => {
 		clearCart()
 	})
 	
+	describe('editCart', () => {
+		test('editCart ska uppdatera de värden som skickas in i newValues', () => {
+			const input = { id: 1001, name: 'Snorkel', price: 55 }
+			addToCart(input)
+			const expected = true
+			
+			const newValues = { name: 'Dykutrustning', price: 60 }
+			const itemId = cart[0].id // hämtar id:t från index plats 0 i cart
+			
+			const actual = editCart(itemId, newValues)
+			expect(actual).toBe(expected) // testar om editCart returnerar true
+			
+			const updatedItem = getItem(0).item // hämtar det uppdaterade objektet
+			expect(updatedItem.name).toBe(newValues.name)
+			expect(updatedItem.price).toBe(newValues.price) //hämtar det uppdaterade objektet och kollar dess värden.
+
+		})
+		test('editcart ska inte uppdatera värden som inte finns i newValues', () => {
+			const input = { id: 1001, name: 'Snorkel', price: 55 }
+			addToCart(input)
+			const expected = true
+			
+			const newValues = { name: 'Dykutrustning' } // priset saknas
+			const itemId = cart[0].id // hämtar id:t från index plats 0 i cart
+			
+			const actual = editCart(itemId, newValues)
+			expect(actual).toBe(expected)
+			
+			const updatedItem = getItem(0).item // hämtar det uppdaterade objektet
+			expect(updatedItem.name).toBe(newValues.name)
+			expect(updatedItem.price).toBe(input.price) // priset ska vara oförändrat
+		}
+		)
+		test('Om itemId inte finns i kundvagnen ska editCart returnera false', () => {
+			const newValues = { name: 'Dykutrustning', price: 60 }
+			const itemId = 9999 
+			const expected = false
+			
+			const actual = editCart(itemId, newValues)
+			expect(actual).toBe(expected)
+		})
+		test('Om newValues är tomt ska editCart returnera false', () => {
+			const input = { id: 1001, name: 'Snorkel', price: 55 }
+			addToCart(input)
+			const itemId = cart[0].id // hämtar id:t från index plats 0 i cart
+			
+			const expected = false
+			const actual = editCart(itemId, {})
+			expect(actual).toBe(expected)
+		})
+		test('Om newValues inte är ett objekt ska editCart returnera false', () => {
+			const input = { id: 1001, name: 'Snorkel', price: 55 }
+			addToCart(input)
+			const itemId = cart[0].id // hämtar id:t från index plats 0 i cart
+			
+			const expected = false
+			const actual = editCart(itemId, 'hej')
+			expect(actual).toBe(expected)
+		})
+		test('Om newValues innehåller en amount som inte är ett heltal ska editCart returnera false', () => {
+			const input = { id: 1001, name: 'Snorkel', price: 55 }
+			addToCart(input)
+			const itemId = cart[0].id // hämtar id:t från index plats 0 i cart
+			const expected = false
+
+			const actual = editCart( itemId, {amount: 1.4})
+			expect(actual).toBe(expected)
+
+		})
+		test('Om newValues innehåller en amount som är mindre än 1 ska editCart returnera false', () => {
+			const input = { id: 1001, name: 'Snorkel', price: 55 }
+			addToCart(input)
+			const itemId = cart[0].id // hämtar id:t från index plats 0 i cart
+			const expected = false
+
+			const actual = editCart( itemId, {amount: -1})
+			expect(actual).toBe(expected)
+		})
+
+	})
+
+
+
+
 	/*toBe jämför om det är exakt samma objekt i minnet (referensjämförelse).
 	toEqual jämför om objekten har samma innehåll (värdejämförelse).
 	När du använder addToCart(input) skapas ett nytt objekt i kundvagnen, så även om innehållet är samma är det inte samma objekt i minnet. Därför kommer toBe(input) oftast att misslyckas, medan toEqual(input) fungerar som du vill. */
@@ -19,7 +103,7 @@ describe('Cart', () => {
 			
 			const actual = getItem(0) 
 			expect(actual.item).toEqual(input)
-		})  /* Felet beror på att din addToCart-funktion lägger till ett nytt objekt i kundvagnen med en annan struktur än det du skickar in som input. Du ska jämföra med actual.item istället för hela objektet*/
+		})  /* addToCart-funktionen lägger till ett nytt objekt i kundvagnen med en annan struktur än det du skickar in som input. Du ska jämföra med actual.item istället för hela objektet*/
 		
 		test('getItem ska returnera false om index är mindre än 0 eller större än antalet objekt i kundvagnen', () => {
 			/*
