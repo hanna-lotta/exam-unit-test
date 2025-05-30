@@ -151,7 +151,7 @@ function clearCart() {
 } 
 
 function getCartItemCount() {
-	/*if (cart.length === 0) {
+	if (cart.length === 0) {
 		return 0
 	}
 	if (!cart.every(isCartItem)) {
@@ -160,7 +160,7 @@ function getCartItemCount() {
 	if (cart.length < 0) {
 		throw new Error('Kundvagnen innehåller ett negativt antal objekt')
 	}
-	return cart.length*/
+	return cart.length
 }
 
 function addToCart(newItem) {
