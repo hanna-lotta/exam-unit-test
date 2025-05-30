@@ -157,9 +157,6 @@ function getCartItemCount() {
 	if (!cart.every(isCartItem)) {
 		throw new Error('Kundvagnen innehåller ogiltiga objekt')
 	}
-	if (cart.length < 0) {
-		throw new Error('Kundvagnen innehåller ett negativt antal objekt')
-	}
 	return cart.length
 }
 
