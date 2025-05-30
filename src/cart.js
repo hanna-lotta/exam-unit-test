@@ -101,29 +101,29 @@ A2. ska kasta felmeddelande "Varan hittades inte" om itemId inte finns i kundvag
 A3. ska  kasta 'Varan hittades inte' om itemId inte är ett nummer
 */
 
-/*  Object.keys(obj) är en inbyggd JavaScript-metod som returnerar en array med alla egenskapsnamn (keys) i objektet obj. */
-/* Object.assign() är en inbyggd JavaScript-metod som kopierar egenskaper från ett eller flera objekt till ett målobjekt.*/
+
 function editCart(itemId, newValues) {
-	/*
-	 if (!newValues || typeof newValues !== "object" || Object.keys(newValues).length === 0) {
+    if (!newValues || typeof newValues !== "object" || Array.isArray(newValues) || !("amount" in newValues) || Object.keys(newValues).length === 0) {
         return false
     }
-    if (typeof newValues.price !== 'number' || typeof newValues.amount !== 'number') {
+    const cartItem = cart.find(item => item.id === itemId)
+    if (!cartItem) {
         return false
     }
-    if (newValues.amount < 1) {
-        return false
+    if ("amount" in newValues) {
+        if (
+            typeof newValues.amount !== "number" ||
+            !Number.isInteger(newValues.amount) ||
+            newValues.amount < 1
+        ) {
+            return false
+        }
+        cartItem.amount = newValues.amount
     }
 	
-	*/
-
-	/* const cartItem = cart.find(item => item.id === itemId)
-    if (cartItem) {
-        Object.assign(cartItem, newValues)
-        return true
-    }
-    return false */
+    return true
 }
+
 
 /*
 AK
@@ -139,11 +139,28 @@ A7. Om newValues innehåller en amount som är mindre än 1 ska editCart returne
 
 
 function clearCart() {
+	if (cart.length === 0) {
+		return false
+	}
+	// Om kundvagnen är tom, returnera false
+	if (!Array.isArray(cart)) {
+		throw new Error('Kundvagnen är inte en array')
+	}
 	cart = []
-}
+	return true
+} 
 
 function getCartItemCount() {
-	return cart.length
+	/*if (cart.length === 0) {
+		return 0
+	}
+	if (!cart.every(isCartItem)) {
+		throw new Error('Kundvagnen innehåller ogiltiga objekt')
+	}
+	if (cart.length < 0) {
+		throw new Error('Kundvagnen innehåller ett negativt antal objekt')
+	}
+	return cart.length*/
 }
 
 function addToCart(newItem) {
@@ -151,9 +168,15 @@ function addToCart(newItem) {
 		return false
 	}
 
-	const cartItem = { id: idCounter, amount: 1, item: newItem }
-	idCounter++
-	cart.push(cartItem)
+	const newId = idCounter
+	const index = cart.findIndex(ci => ci.item.id === newItem.id)
+	if( index === -1 ) {
+		const cartItem = { id: idCounter, amount: 1, item: newItem }
+		idCounter++
+		cart.push(cartItem)
+	} else {
+		cart[index].amount++
+	}
 }
 
 

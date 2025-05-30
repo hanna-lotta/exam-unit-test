@@ -1,49 +1,65 @@
-// importera här
-import { addToCart, getCartItemCount, clearCart, removeFromCart, cart, getItem, getTotalCartValue, idCounter } from "../cart"
+
+import { addToCart, getCartItemCount, clearCart, removeFromCart, cart, getItem, getTotalCartValue, editCart, idCounter } from "../cart"
 
 
 describe('Cart', () => {
 	beforeEach(() => {
-		// Denna kod körs före varje test. Det är för att rensa kundvagnen, så inte saker ligger kvar från föregående test.
+		
 		clearCart()
 	})
 	
+	describe('clearCart', () => {
+		test('clearCart ska tömma kundvagnen och returnera true', () => {
+    	const input = { id: 1001, name: 'Snorkel', price: 55 }
+   	 	addToCart(input)
+    	expect(cart.length).toBe(1)
+		const expected = true
+
+    	const actual = clearCart()
+
+    	expect(cart.length).toBe(0)
+    	expect(actual).toBe(expected)
+	})
+	  test('clearCart ska returnera false om kundvagnen redan är tom', () => {
+		cart.length = 0 
+		const expected = false
+
+        const actual = clearCart()
+
+        expect(actual).toBe(expected)
+    })
+	})
+
 	describe('editCart', () => {
-		test('editCart ska uppdatera de värden som skickas in i newValues', () => {
+		test('editCart ska uppdatera de värden på amount som skickas in i newValues', () => {
 			const input = { id: 1001, name: 'Snorkel', price: 55 }
 			addToCart(input)
+			const itemId = cart[0].id 
+			const newValues = { amount: 2 } 
 			const expected = true
-			
-			const newValues = { name: 'Dykutrustning', price: 60 }
-			const itemId = cart[0].id // hämtar id:t från index plats 0 i cart
 			
 			const actual = editCart(itemId, newValues)
-			expect(actual).toBe(expected) // testar om editCart returnerar true
+			expect(actual).toBe(expected) 
+			expect(getItem(0).amount).toBe(2) 
+		
 			
-			const updatedItem = getItem(0).item // hämtar det uppdaterade objektet
-			expect(updatedItem.name).toBe(newValues.name)
-			expect(updatedItem.price).toBe(newValues.price) //hämtar det uppdaterade objektet och kollar dess värden.
-
 		})
-		test('editcart ska inte uppdatera värden som inte finns i newValues', () => {
+		test('editCart ska returnera false om amount saknas i newValues', () => {
 			const input = { id: 1001, name: 'Snorkel', price: 55 }
 			addToCart(input)
-			const expected = true
-			
-			const newValues = { name: 'Dykutrustning' } // priset saknas
-			const itemId = cart[0].id // hämtar id:t från index plats 0 i cart
+			const itemId = cart[0].id
+        	const newValues = { price: 99 }
+        	const expected = false
 			
 			const actual = editCart(itemId, newValues)
 			expect(actual).toBe(expected)
+			expect(getItem(0).amount).toBe(1)
 			
-			const updatedItem = getItem(0).item // hämtar det uppdaterade objektet
-			expect(updatedItem.name).toBe(newValues.name)
-			expect(updatedItem.price).toBe(input.price) // priset ska vara oförändrat
 		}
 		)
 		test('Om itemId inte finns i kundvagnen ska editCart returnera false', () => {
-			const newValues = { name: 'Dykutrustning', price: 60 }
-			const itemId = 9999 
+			const newValues = { amount: 2 }
+			const itemId = 88 
 			const expected = false
 			
 			const actual = editCart(itemId, newValues)
@@ -52,49 +68,50 @@ describe('Cart', () => {
 		test('Om newValues är tomt ska editCart returnera false', () => {
 			const input = { id: 1001, name: 'Snorkel', price: 55 }
 			addToCart(input)
-			const itemId = cart[0].id // hämtar id:t från index plats 0 i cart
-			
+			const itemId = cart[0].id 
+			const newValues = {}
 			const expected = false
-			const actual = editCart(itemId, {})
+
+			const actual = editCart(itemId, newValues)
 			expect(actual).toBe(expected)
+			expect(getItem(0).amount).toBe(1) 
 		})
 		test('Om newValues inte är ett objekt ska editCart returnera false', () => {
 			const input = { id: 1001, name: 'Snorkel', price: 55 }
 			addToCart(input)
-			const itemId = cart[0].id // hämtar id:t från index plats 0 i cart
-			
+			const itemId = cart[0].id 
+			const newValues = 'hej'
 			const expected = false
-			const actual = editCart(itemId, 'hej')
+
+			const actual = editCart(itemId, newValues)
 			expect(actual).toBe(expected)
+			expect(getItem(0).amount).toBe(1)
 		})
 		test('Om newValues innehåller en amount som inte är ett heltal ska editCart returnera false', () => {
 			const input = { id: 1001, name: 'Snorkel', price: 55 }
 			addToCart(input)
-			const itemId = cart[0].id // hämtar id:t från index plats 0 i cart
+			const itemId = cart[0].id 
+			const newValues = {amount: 1.4}
 			const expected = false
 
-			const actual = editCart( itemId, {amount: 1.4})
+			const actual = editCart( itemId, newValues)
 			expect(actual).toBe(expected)
-
+			expect(getItem(0).amount).toBe(1)
 		})
 		test('Om newValues innehåller en amount som är mindre än 1 ska editCart returnera false', () => {
 			const input = { id: 1001, name: 'Snorkel', price: 55 }
 			addToCart(input)
-			const itemId = cart[0].id // hämtar id:t från index plats 0 i cart
+			const itemId = cart[0].id 
+			const newValues = {amount: -1}
 			const expected = false
 
-			const actual = editCart( itemId, {amount: -1})
+			const actual = editCart( itemId, newValues)
 			expect(actual).toBe(expected)
+			expect(getItem(0).amount).toBe(1)
 		})
 
 	})
 
-
-
-
-	/*toBe jämför om det är exakt samma objekt i minnet (referensjämförelse).
-	toEqual jämför om objekten har samma innehåll (värdejämförelse).
-	När du använder addToCart(input) skapas ett nytt objekt i kundvagnen, så även om innehållet är samma är det inte samma objekt i minnet. Därför kommer toBe(input) oftast att misslyckas, medan toEqual(input) fungerar som du vill. */
 
 	describe('getItem', () => {
 		test('getItem ska returnera ett objekt som finns i kundvagnen', () => {
@@ -103,21 +120,17 @@ describe('Cart', () => {
 			
 			const actual = getItem(0) 
 			expect(actual.item).toEqual(input)
-		})  /* addToCart-funktionen lägger till ett nytt objekt i kundvagnen med en annan struktur än det du skickar in som input. Du ska jämföra med actual.item istället för hela objektet*/
+		})  
 		
 		test('getItem ska returnera false om index är mindre än 0 eller större än antalet objekt i kundvagnen', () => {
-			/*
+			
 			const expected = false
 			const actual = getItem(-1) 
 			expect(actual).toBe(expected)
 
 			const expected2 = false
-			const actual2 = getItem(1) // finns bara ett objekt i kundvagnen
+			const actual2 = getItem(1) // index plats 1 finns inte i kundvagnen
 			expect(actual2).toBe(expected2)
-			*/
-
-			expect(getItem(-1)).toBe(false)
-			expect(getItem(1)).toBe(false) // finns bara ett objekt i kundvagnen
 		})
 		
 		test('getItem ska returnera false om index inte är ett nummer', () => {
@@ -125,18 +138,17 @@ describe('Cart', () => {
 			const expected = false
 			const actual = getItem(input)
 			expect(actual).toBe(expected)
-			// eller
-			//expect(getItem('hej')).toBe(false)
+			
 		})
 		
 		test('getItem ska returnera false om objektet inte är ett giltigt cartItem', () => {
 			const input = { id: 1001, name: 'Snorkel', price: 'femtio' } 
 			addToCart(input)
 			const expected = false
+			
 			const actual = getItem(0)
 			expect(actual).toBe(expected)
 			
-			//expect(getItem(0)).toBe(false)
 		})
 	})
 	
@@ -168,10 +180,29 @@ describe('Cart', () => {
 		})
 	})
 
+	describe('getCartItemCount', () => {
+    	test('ska returnera 0 om kundvagnen är tom', () => {
+			clearCart()
+			const expected = 0
+			const actual = getCartItemCount()
+			expect(actual).toBe(expected)
+    	})
 
-	/*
-	addToCart-funktion returnerar inget värde alls (den har ingen return-sats), utan den lägger bara till ett nytt objekt i kundvagnen (cart). Det objektet som läggs till i kundvagnen får dessutom ett nytt id (från idCounter), inte det id du skickar in i input.
-	*/
+    	test('ska returnera antalet objekt i kundvagnen', () => {
+        addToCart({ id: 1, name: 'Snorkel', price: 55 })
+        addToCart({ id: 2, name: 'Simfötter', price: 100 })
+		const expected = 2
+		const actual = getCartItemCount()
+		expect(actual).toBe(expected)
+    	})
+
+    	test('ska kasta fel om kundvagnen innehåller ogiltiga objekt', () => {
+        addToCart({ id: 1, name: 'Snorkel', price: 55 })
+        cart.push({ test: 'toy' })
+        expect(() => getCartItemCount()).toThrow('Kundvagnen innehåller ogiltiga objekt')
+        cart.pop()
+    	})
+	})
 	
 	describe ( 'removeFromCart', () => {
 		test('removeFromCart ska ta bort en produkt från kundvagnen', () => {
@@ -180,7 +211,7 @@ describe('Cart', () => {
 			
 			
 			const itemCountBefore = getCartItemCount()
-			removeFromCart(cart[0].id) // hämtar id:t från index plats 0 i cart
+			removeFromCart(cart[0].id) 
 			const itemCountAfter = getCartItemCount()
 			
 			expect(itemCountAfter).toBe(itemCountBefore - 1)
@@ -188,7 +219,7 @@ describe('Cart', () => {
 		
 		
 		test("removeFromCart kastar felmeddelande 'Varan hittades inte' om itemId inte finns i kundvagnen", () => {
-			//Arrange
+			
 			const input = '56'
 			
 			expect(() => removeFromCart(input)).toThrow('Varan hittades inte')
@@ -196,7 +227,7 @@ describe('Cart', () => {
 			
 		})
 		test("removeFromCart kastar felmeddelande 'Varan hittades inte' om itemId inte är ett nummer", () => {
-			//Arrange
+			
 			const input = 'hej'
 			
 			expect(() => removeFromCart(input)).toThrow('Varan hittades inte')
@@ -204,10 +235,6 @@ describe('Cart', () => {
 		})
 	})
 	
-	// -------------------------------------------------- //
-	// Skriv dina testfall här
-	
-	// Du får ett test att börja med
 	describe('addToCArt', () => {
 		test('addToCart lägger till en ny produkt i kundvagnen', () => {
 			const itemCountBefore = getCartItemCount()
@@ -221,6 +248,4 @@ describe('Cart', () => {
 			expect(itemCountAfter).toBe(itemCountBefore + 1)
 		})
 	})
-	
-	// -------------------------------------------------- //
 })
