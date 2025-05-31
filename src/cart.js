@@ -21,10 +21,7 @@ import { isCartItem, isProduct } from "./validation.js"
 
 let cart = []
 let idCounter = 2002
-// -------------------------------------------------- //
 
-// Din kod börjar här
-// Du får en funktion att börja med
 function getItem(index) {
     if (typeof index !== 'number') {
         return false
@@ -36,12 +33,6 @@ function getItem(index) {
     return cart[index]
 }
 
-/* AK 
-A1. getItem ska returnera ett objekt som finns i kundvagnen
-A2. getItem ska returnera false om index är mindre än 0 eller större än antalet objekt i kundvagnen
-A3. getItem ska returnera false om index inte är ett nummer
-A4. getItem ska returnera false om objektet inte är ett giltigt cartItem
-*/
 
 function getTotalCartValue() {
 	if (cart.length === 0) {
@@ -54,32 +45,8 @@ function getTotalCartValue() {
 		return total + (item.item.price * item.amount)
 	}, 0)
 }
-/* AK 
-A1. getTotalCartValue ska returnera 0 om kundvagnen är tom
-A2. getTotalCartValue ska returnera summan av alla produkter i kundvagnen
-A3. getTotalCartValue ska kasta ett felmeddelande om ett eller flera objekt i kundvagnen inte är giltiga cartItems
-
-*/
 
 
-
-/* Kollar om itemId är ett nummer
-Om inte, kastas ett fel.
-
-Sparar längden på kundvagnen före borttagning
-const originalLength = cart.length
-
-Tar bort item ur kundvagnen
-cart = cart.filter(item => item.id !== itemId)
-Denna rad skapar en ny array där alla objekt med item.id !== itemId finns kvar.
-Det är här själva borttagningen sker!
-Om ett objekt hade det id:t, tas det bort.
-
-Kollar om något togs bort
-Om längden på kundvagnen är oförändrad (cart.length === originalLength), betyder det att inget objekt hade det id:t – då kastas ett fel.
-
-Returnerar true
-Om ett objekt togs bort, returneras true för att signalera att borttagningen lyckades. */
 function removeFromCart(itemId) {
 	if ( typeof itemId !== 'number') {
 		throw new Error ('Varan hittades inte')
@@ -88,18 +55,9 @@ function removeFromCart(itemId) {
     cart = cart.filter(item => item.id !== itemId)
     if (cart.length === originalLength) {
         throw new Error ('Varan hittades inte') 
-		/* Om någon försöker ta bort en produkt som inte finns, är det ofta ett tecken på att något gått fel i flödet.
-		Det gör det tydligt för den som använder funktionen att detta är ett allvarligt fel som måste hanteras. */
     }
     return true
 }
-
-/* 
-AK
-A1. removeFromCart ska ta bort en produkt från kundvagnen
-A2. ska kasta felmeddelande "Varan hittades inte" om itemId inte finns i kundvagnen
-A3. ska  kasta 'Varan hittades inte' om itemId inte är ett nummer
-*/
 
 
 function editCart(itemId, newValues) {
@@ -125,24 +83,10 @@ function editCart(itemId, newValues) {
 }
 
 
-/*
-AK
-A1. editCart ska uppdatera de värden som skickas in i newValues
-A2. editcart ska inte uppdatera värden som inte finns i newValues
-A3. Om itemId inte finns i kundvagnen ska editCart returnera false
-A4. Om newValues är tomt ska editCart returnera false
-A5. Om newValues inte är ett objekt ska editCart returnera false
-A6. Om newValues innehåller en amount som inte är ett heltal ska editCart returnera false
-A7. Om newValues innehåller en amount som är mindre än 1 ska editCart returnera false
-
-*/
-
-
 function clearCart() {
 	if (cart.length === 0) {
 		return false
 	}
-	// Om kundvagnen är tom, returnera false
 	if (!Array.isArray(cart)) {
 		throw new Error('Kundvagnen är inte en array')
 	}

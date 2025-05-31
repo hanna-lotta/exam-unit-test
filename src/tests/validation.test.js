@@ -1,5 +1,5 @@
 import { isCartItem, isProduct } from "../validation.js"
-// Examples of a valid product and a valid cart item. You may use these when testing below.
+
 const exampleProduct = {
 	id: 1001,
 	name: 'Badanka',
@@ -12,7 +12,7 @@ const exampleCartObject = {
 	item: exampleProduct
 }
 
-// Group tests using "describe"
+
 describe('Validation isCartItem', () => {
 	it ('returns true for a valid cart object', () => {
 		// Arrange
@@ -68,15 +68,4 @@ describe('Validation isCartItem', () => {
 	})
 
 	
-
-
-	// ---------------------------------------------
-	// Följande testfall ska du implementera. Det är tillåtet att använda Joi. Gör i så fall ett schema för varje sorts objekt du vill kunna validera. Du får även ändra texten och du t.ex. vill skriva på svenska i stället för engelska.
-	// (Ta bort dessa kommentarer när du är klar)
-
-	// 1. it returns true for a valid cart object
-	// 2. it returns false for invalid cart objects
-
-	// 3. it returns true for a valid product
-	// 4. it returns false for invalid cart objects
 

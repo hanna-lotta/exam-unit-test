@@ -1,5 +1,5 @@
 
-import { addToCart, getCartItemCount, clearCart, removeFromCart, cart, getItem, getTotalCartValue, editCart, idCounter } from "../cart"
+import { addToCart, getCartItemCount, clearCart, removeFromCart, cart, getItem, getTotalCartValue, editCart } from "../cart"
 
 
 describe('Cart', () => {
@@ -173,7 +173,7 @@ describe('Cart', () => {
 			expect(actual).toBe(expected)
 		})
 
-		test('getTotalCartValue kastar fel om ett objekt i kundvagnen inte är ett giltigt cartItem', () => {
+		test('getTotalCartValue ska kasta fel om ett objekt i kundvagnen inte är ett giltigt cartItem', () => {
     		cart.push({ id: 'leksak', name: 'Snorkel', price: 55 }) 
     		
 			expect(() => getTotalCartValue()).toThrow('Ogiltigt objekt i kundvagnen')
@@ -181,30 +181,30 @@ describe('Cart', () => {
 	})
 
 	describe('getCartItemCount', () => {
-    	test('ska returnera 0 om kundvagnen är tom', () => {
+    	test('etCartItemCoun ska returnera 0 om kundvagnen är tom', () => {
 			clearCart()
 			const expected = 0
 			const actual = getCartItemCount()
 			expect(actual).toBe(expected)
     	})
 
-    	test('ska returnera antalet objekt i kundvagnen', () => {
-        addToCart({ id: 1, name: 'Snorkel', price: 55 })
-        addToCart({ id: 2, name: 'Simfötter', price: 100 })
+    	test('getCartItemCount ska returnera antalet objekt i kundvagnen', () => {
+        addToCart({ id: 1001, name: 'Snorkel', price: 55 })
+        addToCart({ id: 1002, name: 'Simfötter', price: 100 })
 		const expected = 2
 		const actual = getCartItemCount()
 		expect(actual).toBe(expected)
     	})
 
-    	test('ska kasta fel om kundvagnen innehåller ogiltiga objekt', () => {
-        addToCart({ id: 1, name: 'Snorkel', price: 55 })
+    	test('getCartItemCount ska kasta fel om kundvagnen innehåller ogiltiga objekt', () => {
+        addToCart({ id: 1001, name: 'Snorkel', price: 55 })
         cart.push({ test: 'toy' })
         expect(() => getCartItemCount()).toThrow('Kundvagnen innehåller ogiltiga objekt')
         cart.pop()
     	})
 	})
 	
-	describe ( 'removeFromCart', () => {
+	describe ('removeFromCart', () => {
 		test('removeFromCart ska ta bort en produkt från kundvagnen', () => {
 			const input = { id: 1001, name: 'Snorkel', price: 55 }
 			addToCart(input)
@@ -218,7 +218,7 @@ describe('Cart', () => {
 		})
 		
 		
-		test("removeFromCart kastar felmeddelande 'Varan hittades inte' om itemId inte finns i kundvagnen", () => {
+		test("removeFromCart ska kasta felmeddelande 'Varan hittades inte' om itemId inte finns i kundvagnen", () => {
 			
 			const input = '56'
 			
@@ -226,7 +226,7 @@ describe('Cart', () => {
 			
 			
 		})
-		test("removeFromCart kastar felmeddelande 'Varan hittades inte' om itemId inte är ett nummer", () => {
+		test("removeFromCart ska kasta felmeddelande 'Varan hittades inte' om itemId inte är ett nummer", () => {
 			
 			const input = 'hej'
 			
@@ -235,8 +235,8 @@ describe('Cart', () => {
 		})
 	})
 	
-	describe('addToCArt', () => {
-		test('addToCart lägger till en ny produkt i kundvagnen', () => {
+	describe('addToCart', () => {
+		test('addToCart ska lägga till en ny produkt i kundvagnen', () => {
 			const itemCountBefore = getCartItemCount()
 			const input = { id: 1002, name: 'Vattenpistol', price: 40 }
 			
@@ -247,5 +247,31 @@ describe('Cart', () => {
 			
 			expect(itemCountAfter).toBe(itemCountBefore + 1)
 		})
+		test('addToCart ska returnera false om produkten inte är giltig', () => {
+    		const input = { test: 'toy' } 
+			const expected = false
+
+   			const actual = addToCart(input)
+
+    		expect(actual).toBe(expected)
+    		expect(getCartItemCount()).toBe(0)
+		})
+		test('addToCart ska öka amount om samma produkt läggs till igen', () => {
+        	const input = { id: 1002, name: 'Vattenpistol', price: 40 }
+        	addToCart(input)
+        	addToCart(input)
+        	expect(cart.length).toBe(1)
+        	expect(cart[0].amount).toBe(2)
+    	})
+		test('addToCart ska öka amount på rätt produkt om flera olika produkter finns i kundvagnen', () => {
+        	const input1 = { id: 1002, name: 'Vattenpistol', price: 40 }
+        	const input2 = { id: 1001, name: 'Snorkel', price: 55 }
+        	addToCart(input1)
+        	addToCart(input2)
+        	addToCart(input1)
+        	expect(cart.length).toBe(2)
+        	expect(cart[0].amount).toBe(2) // Vattenpistol
+        	expect(cart[1].amount).toBe(1) // Snorkel
+    })
 	})
 })
