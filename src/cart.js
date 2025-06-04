@@ -87,9 +87,6 @@ function clearCart() {
 	if (cart.length === 0) {
 		return false
 	}
-	if (!Array.isArray(cart)) {
-		throw new Error('Kundvagnen är inte en array')
-	}
 	cart = []
 	return true
 } 

@@ -181,7 +181,7 @@ describe('Cart', () => {
 	})
 
 	describe('getCartItemCount', () => {
-    	test('etCartItemCoun ska returnera 0 om kundvagnen är tom', () => {
+    	test('getCartItemCount ska returnera 0 om kundvagnen är tom', () => {
 			clearCart()
 			const expected = 0
 			const actual = getCartItemCount()
