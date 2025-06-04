@@ -24,7 +24,7 @@ describe('Validation isCartItem', () => {
 		expect(actual).toBe(expected)
 	}
 	)
-	it ('returns false for invalid cart objects', () => {
+	it ('returns false for invalid cart object', () => {
 		// Arrange
 		const exampleCartObject = {
 			id: 2001,
@@ -51,7 +51,7 @@ describe('Validation isCartItem', () => {
 			expect(actual).toBe(expected)
 		}
 		)
-		it ( 'returns false for invalid cart objects', () => {
+		it ( 'returns false for invalid cart object', () => {
 			//Arrange
 			const exampleProduct = {
 				id: 1001,

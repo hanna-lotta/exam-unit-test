@@ -220,7 +220,7 @@ describe('Cart', () => {
 		
 		test("removeFromCart ska kasta felmeddelande 'Varan hittades inte' om itemId inte finns i kundvagnen", () => {
 			
-			const input = '56'
+			const input = 56
 			
 			expect(() => removeFromCart(input)).toThrow('Varan hittades inte')
 			
